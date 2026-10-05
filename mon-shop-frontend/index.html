@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDIO | Édition Limitée</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cursor"></div>
+
+    <nav class="navbar">
+        <div class="logo" id="home-link">STUDIO.</div>
+        <div class="nav-right">
+            <div class="cart-wrapper interactive" id="open-cart">
+                <span class="cart-text">BAG</span>
+                <div class="cart-badge" id="cart-count">0</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- VUE ACCUEIL / CATALOGUE -->
+    <div id="home-view">
+        <header class="hero">
+            <h1 class="hero-title">
+                <span class="line">NEW</span>
+                <span class="line indent">ERA.</span>
+            </h1>
+            <p class="hero-subtitle">Collection permanente et pièces d'exception. 50+ références exclusives.</p>
+            <div class="scroll-indicator">↓ DÉCOUVRIR</div>
+        </header>
+
+        <main class="container">
+            <!-- Barre de filtres et recherche -->
+            <section class="filters-section">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Rechercher une pièce...">
+                </div>
+                
+                <div class="category-tabs" id="category-tabs">
+                    <button class="tab-btn active" data-cat="Tous">Tous</button>
+                    <button class="tab-btn" data-cat="Manteaux">Manteaux</button>
+                    <button class="tab-btn" data-cat="Pantalons">Pantalons</button>
+                    <button class="tab-btn" data-cat="Maille">Maille</button>
+                    <button class="tab-btn" data-cat="Accessoires">Accessoires</button>
+                    <button class="tab-btn" data-cat="Chaussures">Chaussures</button>
+                </div>
+
+                <div class="sort-filter-group">
+                    <button class="filter-sale-btn" id="filter-sale">🔥 Soldes</button>
+                    <select id="sort-select" class="sort-select">
+                        <option value="default">Trier par</option>
+                        <option value="asc">Prix : Moins cher au plus cher</option>
+                        <option value="desc">Prix : Plus cher au moins cher</option>
+                    </select>
+                </div>
+            </section>
+
+            <div id="product-grid" class="product-grid">
+                <!-- Injecté dynamiquement -->
+            </div>
+        </main>
+    </div>
+
+    <!-- VUE DÉTAIL PRODUIT -->
+    <div id="detail-view" class="detail-view hidden">
+        <button class="back-btn interactive" id="back-to-home">← Retour au catalogue</button>
+        <div id="product-detail-content">
+            <!-- Injecté dynamiquement -->
+        </div>
+    </div>
+
+    <!-- TIROIR PANIER COULISSANT (CART DRAWER) -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <h2>Votre Panier</h2>
+            <button class="close-cart interactive" id="close-cart">✕</button>
+        </div>
+        <div class="cart-drawer-items" id="cart-drawer-items">
+            <!-- Articles du panier -->
+        </div>
+        <div class="cart-drawer-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cart-total-price">0,00 €</span>
+            </div>
+            <button class="checkout-btn interactive">Valider la commande</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
