@@ -7,34 +7,57 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
-  build-and-test:
+  # Job 1 : Ne s'exécute que si des fichiers du backend changent
+  lint-backend:
+    name: 🔍 Lint Backend
     runs-on: ubuntu-latest
-
     steps:
-    - name: 📥 Récupérer le code source
-      uses: actions/checkout@v4
+      - name: 📥 Récupérer le code source
+        uses: actions/checkout@v4
 
-    - name: ⚙️ Installer Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: ⚙️ Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: 🔍 Lancer le Linting sur le Backend
-      run: |
-        cd mon-shop-backend
-        npm install
-        npm run lint
+      - name: 🔍 Lancer le Linting sur le Backend
+        run: |
+          cd mon-shop-backend
+          npm install
+          npm run lint
 
-    - name: 🔍 Lancer le Linting sur le Frontend
-      run: |
-        cd mon-shop-frontend
-        npm install
-        npm run lint
+  # Job 2 : Ne s'exécute que si des fichiers du frontend changent
+  lint-frontend:
+    name: 🔍 Lint Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Récupérer le code source
+        uses: actions/checkout@v4
 
-    - name: 🐳 Configurer Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      - name: ⚙️ Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: 🧪 Tester la construction Docker Compose
-      run: |
-        docker compose config
-        docker compose build
+      - name: 🔍 Lancer le Linting sur le Frontend
+        run: |
+          cd mon-shop-frontend
+          npm install
+          npm run lint
+
+  # Job 3 : Vérifie la construction globale Docker (uniquement si nécessaire)
+  docker-build-test:
+    name: 🐳 Test Docker Compose Build
+    needs: [lint-backend, lint-frontend] # S'exécute après les linters
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Récupérer le code source
+        uses: actions/checkout@v4
+
+      - name: 🐳 Configurer Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🧪 Tester la construction Docker Compose
+        run: |
+          docker compose config
+          docker compose build
